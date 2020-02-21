@@ -18,17 +18,20 @@ public:
 	/*---constructeur---*/
 	Commande();
 	Commande(const Commande&);
-	/*---set---*/
+
+	/*---------set----------*/
 	void SetNom(string Nom);
 	void SetFin(bool Fini);
-	/*--get---*/
+
+	/*---------get---------*/
 	Produit* getProduitLigneCommande(int noCommande) const;
 	int getQuantiteLigneCommande(int inNoCommande) const;
 
 	string getName() const;
 	bool getCommandeFini() const;
 	int getQuantiteActuel() const;
-	/*---fonction---*/
+
+	/*---------fonction----------*/
 	void AjouterLigneDeCommande(Produit* produit, int Quantitée);
 };
 

@@ -44,12 +44,27 @@ Produit* Commande::getProduitLigneCommande(int inNoCommande) const
 
 int Commande::getQuantiteLigneCommande(int inNoCommande) const
 {
-	int qte
+	int Quantite = 0;
 	if (inNoCommande <= QuantitéeProduitsActuel)
 	{
-		unProduit = TabLignesCommandes[inNoCommande].getProduit();
+		Quantite = TabLignesCommandes[inNoCommande].getQuantite();
 	}
-	return 0;
+	return Quantite;
+}
+
+string Commande::getName() const
+{
+	return NomClient;
+}
+
+bool Commande::getCommandeFini() const
+{
+	return CommandeFini;
+}
+
+int Commande::getQuantiteActuel() const
+{
+	return QuantitéeProduitsActuel;
 }
 
 void Commande::AjouterLigneDeCommande(Produit* inProduit, int inQuantitée)
