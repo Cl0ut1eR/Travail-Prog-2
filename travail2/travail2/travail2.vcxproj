@@ -147,12 +147,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\screen\screen.cpp" />
+    <ClCompile Include="Commande.cpp" />
     <ClCompile Include="donnees.cpp" />
+    <ClCompile Include="LigneDeCommande.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\screen\screen.h" />
+    <ClInclude Include="Commande.h" />
     <ClInclude Include="donnees.h" />
+    <ClInclude Include="LigneDeCommande.h" />
     <ClInclude Include="produit\Produit.h" />
   </ItemGroup>
   <ItemGroup>
