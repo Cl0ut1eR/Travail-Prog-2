@@ -5,6 +5,11 @@ Donnees::Donnees()
 	AjouterLesProduitsAVendre();
 }
 
+int Donnees::getMaxProduitsAVendre() const
+{
+	return maxProduitsAVendre;
+}
+
 void Donnees::AjouterLesProduitsAVendre()
 {
 	produitsAVendre[0].InitialiserProduit("obj1", "feuxfous fuseboum", "feux d'artifices invulnérables aux sorts", 7);

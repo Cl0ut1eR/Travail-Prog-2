@@ -15,24 +15,34 @@ private:
 	bool CommandeFini;
 	int QuantitéeProduitsActuel;
 public:
-	/*---constructeur---*/
-	Commande();
-	Commande(const Commande&);
 
-	/*---------set----------*/
-	void SetNom(string Nom);
-	void SetFin(bool Fini);
+	#pragma region Constructeurs
+		Commande();
+		Commande(const Commande&);
+	#pragma endregion
 
-	/*---------get---------*/
-	Produit* getProduitLigneCommande(int noCommande) const;
-	int getQuantiteLigneCommande(int inNoCommande) const;
+	#pragma region Set
+		void SetNom(string Nom);
+		void SetFin(bool Fini);
+	#pragma endregion
 
-	string getName() const;
-	bool getCommandeFini() const;
-	int getQuantiteActuel() const;
+	#pragma region Get
+		//récupère un produit dans la commandes.
+		Produit* getProduitLigneCommande(int noCommande) const;
+		//récupère la quantité d'un produit dans la commande.
+		int getQuantiteLigneCommande(int inNoCommande) const;
 
-	/*---------fonction----------*/
-	void AjouterLigneDeCommande(Produit* produit, int Quantitée);
+		string getName() const;
+		bool getCommandeFini() const;
+		int getQuantiteActuel() const;
+	#pragma endregion
+
+	#pragma region Functions
+
+		void AjouterLigneDeCommande(Produit* produit, int Quantitée);
+
+	#pragma endregion
+
 };
 
 #endif

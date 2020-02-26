@@ -12,5 +12,6 @@ public:
 	Donnees();
 	Produit produitsAVendre[maxProduitsAVendre];
 
+	int getMaxProduitsAVendre() const;
 };
 

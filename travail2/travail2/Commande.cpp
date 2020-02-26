@@ -19,7 +19,7 @@ Commande::Commande(const Commande& inCommande)
 		TabLignesCommandes[i] = inCommande.TabLignesCommandes[i];
 	}
 
-	NomClient = inCommande.
+	NomClient = inCommande.getName();
 }
 
 void Commande::SetNom(string inNom)

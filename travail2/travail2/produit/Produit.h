@@ -1,5 +1,6 @@
 #ifndef produitH
 #define produitH
+
 #include <string>
 using namespace std;
 
