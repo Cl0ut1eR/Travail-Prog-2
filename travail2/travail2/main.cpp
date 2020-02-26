@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
+#include <stdbool.h>
 #include "..\screen\screen.h"
 using namespace std;
 
@@ -21,18 +22,13 @@ void TraiterLesCommandes();
 string DemanderNom();
 void AfficherProduitsDisponible();
 void AfficherUnProduit(int Pos);
-void test2();
+string DemanderNoProduit();
+void ajouterLigneCommande(Commande* inCommande);
 
 void main()
 {
 
-	//SetConsoleCP(CP_UTF8);
-//SetConsoleOutputCP(CP_UTF8);
-
-	while (true)
-	{
-		test2();
-	}
+	
 
 	char choix = ' ';
 	while (choix != '0')
@@ -50,14 +46,6 @@ void main()
 	}
 }
 
-void test2()
-{
-	ClrScr();
-	std::string testt = "";
-	cin >> testt;
-	cout << "1 :"<<testt<<" 2: é  3: à  4: É";
-	cin >> testt;
-}
 char AfficherMenu()
 {
 	char choix;
@@ -83,26 +71,102 @@ char AfficherMenu()
 }
 void CreerCommande()
 {
+	string Rep;
 	Commande UneCommande = Commande();
 	UneCommande.SetNom(DemanderNom());
 
 	AfficherProduitsDisponible();
-	string test = "";
-	cin >> test;
+	ajouterLigneCommande(&UneCommande);
+
+
+	cout << "Termimner? o/n?\n";
+	cin >> Rep;
+
+	while (Rep != "o")
+	{
+		ajouterLigneCommande(&UneCommande);
+
+		if (UneCommande.getQuantiteActuel() < UneCommande.getMaxProduitCommande())
+		{
+			cout << "Termimner? o/n?\n";
+			cin >> Rep;
+		}
+		else
+		{
+			cout << "Limite du nombre article accepte par commande atteint.";
+			Rep = "o";
+		}
+
+
+	}
+
+	
+	/*string test = "";
+	cin >> test;*/
 //	Commande laCommande;
 
+
+	
 
 
 //	AjouterCommande(laCommande);
 }
 
-string ConvertToUTF8(string inText)
+string DemanderNoProduit()
 {
-	bool ACorrige = true;
-	while (ACorrige)
+	string noProduit;
+	cout << "\nEntrer le numero de produit souhaiter: ";
+
+	while (!(std::cin >> noProduit) || noProduit == "" || !gestionCommande.VerifierNoProduit(noProduit))
 	{
-		inText.find("à")
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(2000, '\n');
+		}
+		ClrScr();
+		cout << "Une erreure est survenue,\nEntrer le numero de produit souhaiter : \n";
 	}
+
+	return noProduit;
+}
+
+int DemanderQtyProduit()
+{
+	int QtyProduit =0;
+	cout << "Combien?: ";
+
+	while (!(std::cin >> QtyProduit) || QtyProduit < 1)
+	{
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(2000, '\n');
+		}
+		ClrScr();
+		cout << "Une erreure est survenue,\nCombien?: \n";
+	}
+
+	return QtyProduit;
+}
+
+
+
+void ajouterLigneCommande(Commande* inCommande)
+{
+
+
+	if (inCommande->getQuantiteActuel()<QuantiteeProduitsMax)
+	{
+		string Code=DemanderNoProduit();
+		int quantite = DemanderQtyProduit();
+
+		inCommande->AjouterLigneDeCommande(gestionCommande.getProduitByCode(Code), quantite);
+		cout << "Article ajouter avec succes.\n\n";
+
+
+	}
+	
 }
 
 void AfficherProduitsDisponible()

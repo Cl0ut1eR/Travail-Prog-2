@@ -29,8 +29,12 @@ public:
 	#pragma region Get
 		//récupère un produit dans la commandes.
 		Produit* getProduitLigneCommande(int noCommande) const;
+		
+		
+
 		//récupère la quantité d'un produit dans la commande.
 		int getQuantiteLigneCommande(int inNoCommande) const;
+		int getMaxProduitCommande() const;
 
 		string getName() const;
 		bool getCommandeFini() const;

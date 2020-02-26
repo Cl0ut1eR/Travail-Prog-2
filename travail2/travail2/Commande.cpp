@@ -42,6 +42,10 @@ Produit* Commande::getProduitLigneCommande(int inNoCommande) const
 	return unProduit;
 }
 
+
+
+
+
 int Commande::getQuantiteLigneCommande(int inNoCommande) const
 {
 	int Quantite = 0;
@@ -50,6 +54,11 @@ int Commande::getQuantiteLigneCommande(int inNoCommande) const
 		Quantite = TabLignesCommandes[inNoCommande].getQuantite();
 	}
 	return Quantite;
+}
+
+int Commande::getMaxProduitCommande() const
+{
+	return QuantiteeProduitsMax;
 }
 
 string Commande::getName() const

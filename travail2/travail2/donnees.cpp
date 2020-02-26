@@ -5,6 +5,37 @@ Donnees::Donnees()
 	AjouterLesProduitsAVendre();
 }
 
+bool Donnees::VerifierNoProduit(string inNoProduit) const
+{
+	
+	
+		bool exist = false;
+
+		for (int i = 0; i < getMaxProduitsAVendre(); i++)
+		{
+			if (produitsAVendre[i].getCode() == inNoProduit)
+			{
+				exist = true;
+				i = getMaxProduitsAVendre() + 1;
+			}
+		}
+		return exist;
+	
+}
+
+Produit* Donnees::getProduitByCode(string inCodeProduit) 
+{
+	Produit* unProduit = NULL;
+		for (int i = 0; i < maxProduitsAVendre; i++)
+		{
+			if (produitsAVendre[i].getCode() == inCodeProduit)
+			{
+				unProduit = &produitsAVendre[i];
+			}
+		}
+	return unProduit;
+}
+
 int Donnees::getMaxProduitsAVendre() const
 {
 	return maxProduitsAVendre;
