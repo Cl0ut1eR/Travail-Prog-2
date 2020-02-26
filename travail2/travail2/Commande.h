@@ -13,7 +13,7 @@ private:
 	LigneDeCommande TabLignesCommandes[QuantiteeProduitsMax];
 	string NomClient;
 	bool CommandeFini;
-	int QuantitéeProduitsActuel;
+	int QuantiteProduitsActuel;
 public:
 
 	#pragma region Constructeurs

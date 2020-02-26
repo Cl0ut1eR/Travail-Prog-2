@@ -8,7 +8,7 @@ Commande::Commande()
 	}
 	NomClient = "";
 	CommandeFini = false;
-	QuantitéeProduitsActuel = 0;
+	QuantiteProduitsActuel = 0;
 	
 }
 
@@ -35,7 +35,7 @@ void Commande::SetFin(bool inFini)
 Produit* Commande::getProduitLigneCommande(int inNoCommande) const
 {
 	Produit* unProduit = NULL;
-	if (inNoCommande <= QuantitéeProduitsActuel)
+	if (inNoCommande <= QuantiteProduitsActuel)
 	{
 		unProduit = TabLignesCommandes[inNoCommande].getProduit();
 	}
@@ -49,7 +49,7 @@ Produit* Commande::getProduitLigneCommande(int inNoCommande) const
 int Commande::getQuantiteLigneCommande(int inNoCommande) const
 {
 	int Quantite = 0;
-	if (inNoCommande <= QuantitéeProduitsActuel)
+	if (inNoCommande <= QuantiteProduitsActuel)
 	{
 		Quantite = TabLignesCommandes[inNoCommande].getQuantite();
 	}
@@ -73,16 +73,16 @@ bool Commande::getCommandeFini() const
 
 int Commande::getQuantiteActuel() const
 {
-	return QuantitéeProduitsActuel;
+	return QuantiteProduitsActuel;
 }
 
 void Commande::AjouterLigneDeCommande(Produit* inProduit, int inQuantitée)
 {
-	if (QuantitéeProduitsActuel < QuantiteeProduitsMax)
+	if (QuantiteProduitsActuel < QuantiteeProduitsMax)
 	{
-		QuantitéeProduitsActuel++;
-		TabLignesCommandes[QuantitéeProduitsActuel].setProduit(inProduit);
-		TabLignesCommandes[QuantitéeProduitsActuel].setQuantite(inQuantitée);
+		QuantiteProduitsActuel++;
+		TabLignesCommandes[QuantiteProduitsActuel].setProduit(inProduit);
+		TabLignesCommandes[QuantiteProduitsActuel].setQuantite(inQuantitée);
 
 	}
 }

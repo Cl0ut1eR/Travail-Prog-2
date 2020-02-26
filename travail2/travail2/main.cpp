@@ -24,6 +24,8 @@ void AfficherProduitsDisponible();
 void AfficherUnProduit(int Pos);
 string DemanderNoProduit();
 void ajouterLigneCommande(Commande* inCommande);
+std::string ReplaceAll(std::string str, const std::string& from, const std::string& to);
+string ConvertToUTF8(string inText);
 
 void main()
 {
@@ -55,13 +57,13 @@ char AfficherMenu()
 	Gotoxy(40,1);
 	cout << "Choisir une option";
 	Gotoxy(40, 4);
-	cout << "1- Creer une commande";
+	cout << ConvertToUTF8("1- Créer une commande");
 	Gotoxy(40, 6);
 	cout << "2- Afficher les commandes";
 	Gotoxy(40, 8);
 	cout << "3- Traiter les commandes";
 	Gotoxy(40, 10);
-	cout << "0- Arreter";
+	cout << ConvertToUTF8("0- Arrêter");
 	Gotoxy(40, 12);
 	cout << "Choix: ";
 	cin >> choix;
@@ -110,6 +112,42 @@ void CreerCommande()
 
 
 //	AjouterCommande(laCommande);
+}
+std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) {
+	size_t start_pos = 0;
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length(); // Handles case where 'to' is a substring of 'from'
+	}
+	return str;
+}
+string ConvertToUTF8(string inText)
+{
+
+	inText = ReplaceAll(string(inText), std::string("…"), std::string("..."));
+	inText = ReplaceAll(string(inText), std::string("é"), std::string("\202"));
+	inText = ReplaceAll(string(inText), std::string("à"), std::string("\205"));
+	inText = ReplaceAll(string(inText), std::string("ç"), std::string("\207"));
+	inText = ReplaceAll(string(inText), std::string("Ç"), std::string("\200"));
+	inText = ReplaceAll(string(inText), std::string("â"), std::string("\203"));
+	inText = ReplaceAll(string(inText), std::string("ê"), std::string("\210"));
+	inText = ReplaceAll(string(inText), std::string("ë"), std::string("\211"));
+	inText = ReplaceAll(string(inText), std::string("è"), std::string("\212"));
+	inText = ReplaceAll(string(inText), std::string("é"), std::string("\202"));
+	inText = ReplaceAll(string(inText), std::string("É"), std::string("\220"));
+	inText = ReplaceAll(string(inText), std::string("ï"), std::string("\213"));
+	inText = ReplaceAll(string(inText), std::string("î"), std::string("\214"));
+	inText = ReplaceAll(string(inText), std::string("ì"), std::string("\214"));
+	inText = ReplaceAll(string(inText), std::string("æ"), std::string("\221"));
+	inText = ReplaceAll(string(inText), std::string("Æ"), std::string("\221"));
+	inText = ReplaceAll(string(inText), std::string("ô"), std::string("\222"));
+	inText = ReplaceAll(string(inText), std::string("û"), std::string("\226"));
+
+
+	//a trouver
+	inText = ReplaceAll(string(inText), std::string("ù"), std::string("u"));
+
+	return inText;
 }
 
 string DemanderNoProduit()
@@ -162,7 +200,7 @@ void ajouterLigneCommande(Commande* inCommande)
 		int quantite = DemanderQtyProduit();
 
 		inCommande->AjouterLigneDeCommande(gestionCommande.getProduitByCode(Code), quantite);
-		cout << "Article ajouter avec succes.\n\n";
+		cout << ConvertToUTF8("Article ajouter avec succès.\n\n");
 
 
 	}
@@ -183,10 +221,10 @@ void AfficherProduitsDisponible()
 
 void AfficherUnProduit(int Pos)
 {
-	cout << "\n"<<gestionCommande.produitsAVendre[Pos].getNom();
-	cout << "\n\t" << gestionCommande.produitsAVendre[Pos].getDescription();
-	cout << "\n\t" << gestionCommande.produitsAVendre[Pos].getPrix()<<"$";
-	cout << "\n\tCode:" << gestionCommande.produitsAVendre[Pos].getCode();
+	cout << "\n"<< ConvertToUTF8(gestionCommande.produitsAVendre[Pos].getNom());
+	cout << "\n\t" << ConvertToUTF8(gestionCommande.produitsAVendre[Pos].getDescription());
+	cout << "\n\t" << ConvertToUTF8(gestionCommande.produitsAVendre[Pos].getPrix()+"$");
+	cout << "\n\tCode:" << ConvertToUTF8(gestionCommande.produitsAVendre[Pos].getCode());
 	cout << "\n";
 }
 
@@ -196,7 +234,7 @@ string DemanderNom()
 {
 	ClrScr();
 	string nomClient = "";
-	cout << "Veuillez écrire le nom à indiquer sur la commande.\n";
+	cout << ConvertToUTF8("Veuillez écrire le nom à indiquer sur la commande.\n");
 
 		while (!(std::cin >> nomClient) || nomClient =="")
 		{
@@ -206,7 +244,7 @@ string DemanderNom()
 				std::cin.ignore(2000, '\n');
 			}
 			ClrScr();
-			cout << "Une erreure est survenue,\nveuillez écrire le nom à indiquer sur la commande.\n";
+			cout << ConvertToUTF8("Une erreure est survenue,\nveuillez écrire le nom à indiquer sur la commande.\n");
 		}
 		return nomClient;
 }
