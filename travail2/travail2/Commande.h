@@ -23,6 +23,7 @@ public:
 
 	#pragma region Set
 		void SetNom(string Nom);
+		//true pour quelle soit fini.
 		void SetFin(bool Fini);
 	#pragma endregion
 

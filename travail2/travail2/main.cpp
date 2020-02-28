@@ -38,6 +38,7 @@ using namespace std;
 	int DemanderQtyProduit(string nomProduit);
 	void AjouterCommande(Commande inCommande);
 	void AfficherUneCommande(Commande* inCommande);
+	void FinaliserCommande(Commande* inCommande);
 #pragma endregion
 
 
@@ -270,12 +271,44 @@ void AfficherUneCommande(Commande* inCommande)
 
 void TraiterLesCommandes()
 {
-	int cpt = gestionCommande.
-	string reponse = "";
-	while(reponse=="o")
+	vector<int> tabCommandesNonFini = gestionCommande.getTabCommandeNonFinal();
+	int index = 0;
+	string Continuer = "o";
+	while (index < tabCommandesNonFini.size()&&(Continuer=="o" || Continuer=="n"))
+	{
+		if (Continuer == "o")
+		{
+			string Action = "";
+			ClrScr();
+			while (Action != "F" && Action != "f" && Action != "m" && Action != "M")
+			{
+				AfficherUneCommande(gestionCommande.getUneCommande(index));
+				cout << "\n\tfinaliser  --- f-F\n\tModifier les quantitées  --- m-M\n";
+				cin >> Action;
+				cin.clear();
+				ClrScr();
+				if (Action != "F" && Action != "f" && Action != "m" && Action != "M")
+				{
+					cout << "Une erreur est survenue.\n";
+				}
+			}
+			if (Action == "F" || Action == "f")
+			{
+				FinaliserCommande(gestionCommande.getUneCommande(index));
+				ClrScr();
+				cout << "La commande à été finalisée\n";
+				system("pause");
+			}
+		}
+		index++;
+	}
+}
 
-
-		AfficherUneCommande()
-
+void FinaliserCommande(Commande* inCommande)
+{
+	if (inCommande != NULL)
+	{
+		inCommande->SetFin(true);
+	}
 }
 

@@ -57,6 +57,21 @@ int Donnees:: getQtyCommandeActuel() const
 }
 
 
+
+vector<int> Donnees::getTabCommandeNonFinal() const
+{
+	 vector<int>tabIndex;
+	 for (int i = 0; i < qtyCommandes; i++)
+	 {
+		 if (!tabDesCommandes[i].getCommandeFini())
+		 {
+			 tabIndex.push_back(i);
+		 }
+	 }
+	 return tabIndex;
+}
+
+
 void Donnees::setQtyCommandeActuel(int inQuantite) 
 {
 	if (inQuantite <= QuantiteeProduitsMax)

@@ -24,7 +24,7 @@ public:
 	Commande* getUneCommande(int Position);
 	int getMaxProduitsAVendre() const;
 	int getQtyCommandeActuel() const;
-	int getQtyCommandeNonFinal() const;
+	vector<int> getTabCommandeNonFinal() const;
 #pragma endregion
 
 
