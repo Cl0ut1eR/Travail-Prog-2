@@ -3,6 +3,7 @@
 Donnees::Donnees()
 {
 	AjouterLesProduitsAVendre();
+	qtyCommandes = 0;
 }
 
 bool Donnees::VerifierCodeProduit(string inCodeProduit) const
@@ -36,9 +37,50 @@ Produit* Donnees::getProduitByCode(string inCodeProduit)
 	return unProduit;
 }
 
+Commande* Donnees::getUneCommande(int inPosition)
+{
+	Commande* uneCommande = NULL;
+	if (inPosition <= qtyCommandes)
+	{
+		uneCommande = &tabDesCommandes[inPosition];
+	}
+	return uneCommande;
+}
+
 int Donnees::getMaxProduitsAVendre() const
 {
 	return maxProduitsAVendre;
+}
+int Donnees:: getQtyCommandeActuel() const
+{
+	return qtyCommandes;
+}
+
+
+void Donnees::setQtyCommandeActuel(int inQuantite) 
+{
+	if (inQuantite <= QuantiteeProduitsMax)
+	{
+		qtyCommandes = inQuantite;
+	}
+	
+}
+
+bool Donnees::AddCommande(Commande inCommande) 
+{
+	bool reussi = true;
+
+	if (qtyCommandes<QuantiteeProduitsMax)
+	{
+		tabDesCommandes[qtyCommandes] = inCommande;
+		qtyCommandes++;
+	}
+	else 
+	{
+		reussi = false;
+	}
+	return reussi;
+
 }
 
 void Donnees::AjouterLesProduitsAVendre()

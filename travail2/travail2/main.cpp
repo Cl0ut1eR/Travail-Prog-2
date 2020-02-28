@@ -36,16 +36,18 @@ using namespace std;
 	string DemanderCodeProduit();
 	void ajouterLigneCommande(Commande* inCommande);
 	int DemanderQtyProduit(string nomProduit);
+	void AjouterCommande(Commande inCommande);
+	void AfficherUneCommande(Commande* inCommande);
 #pragma endregion
 
 
 void main()
 {
 	#pragma region UTF8
-	#if defined WIN32
-	system("chcp 1252");
-	#endif
-#pragma endregion
+		#if defined WIN32
+		system("chcp 1252");
+		#endif
+	#pragma endregion
 
 	char choix = ' ';
 	while (choix != '0')
@@ -73,7 +75,7 @@ void main()
 		UneCommande.SetNom(DemanderNom());
 
 		//ajout lignes commandes
-		string quiter = "N";
+		string ajouterNew = "N";
 		do 
 		{
 			ClrScr();
@@ -81,26 +83,19 @@ void main()
 
 			if (UneCommande.getQuantiteActuel() < UneCommande.getMaxProduitCommande())
 			{
-				cout << "Termimner? o/n?\n";
-				cin >> quiter;
+				cout << "En ajouter un autre? o/n?\n";
+				cin >> ajouterNew;
+				cin.clear();
 			}
 			else
 			{
 				cout << "Limite du nombre article accepte par commande atteint.";
-				quiter = "o";
+				ajouterNew = "n";
 			}
-		} while (quiter != "o");
-
-	
-		/*string test = "";
-		cin >> test;*/
-		//	Commande laCommande;
+		} while (ajouterNew =="o"||ajouterNew=="O");
 
 
-	
-
-
-			//	AjouterCommande(laCommande);
+		AjouterCommande(UneCommande);
 	}
 
 	void ajouterLigneCommande(Commande* inCommande)
@@ -130,7 +125,8 @@ void main()
 		while (codeProduit == "" || !gestionCommande.VerifierCodeProduit(codeProduit))
 		{
 			cout << "\nEntrer le code du produit souhaiter: \n";
-			getline(cin, codeProduit);
+			cin>>codeProduit;
+			std::cin.clear();
 			if (codeProduit == "" || !gestionCommande.VerifierCodeProduit(codeProduit))
 			{
 				ClrScr();
@@ -168,6 +164,7 @@ void main()
 		do 
 		{
 			getline(cin, nomClient);
+			std::cin.clear();
 			ClrScr();
 			cout << "Le nom dois contenir entre 3 et 250 charactères,\nveuillez écrire le nom à indiquer sur la commande.\n";
 
@@ -231,19 +228,54 @@ void main()
 
 
 
-//pour tester constructeur par recopie
-//void AjouterCommande(Commande inCommande) 
-//{
-//
-//}
+void AjouterCommande(Commande inCommande) 
+{
+
+	if (inCommande.getQuantiteActuel() < gestionCommande.getMaxProduitsAVendre())
+	{
+		gestionCommande.AddCommande(inCommande);
+	}
+}
 
 void AfficherLesCommandes()
 {
+	ClrScr();
+	for (int i = 0; i < gestionCommande.getQtyCommandeActuel(); i++)
+	{
+		AfficherUneCommande(gestionCommande.getUneCommande(i));
+		cout << "-------------------------\n";
+	}
+	system("Pause");
+}
 
+void AfficherUneCommande(Commande* inCommande)
+{
+	if (inCommande != NULL && inCommande->getQuantiteActuel() > 0)
+	{
+		int grandTotalCommande = 0;
+		cout << inCommande->getName()<<"\n\n";
+		Produit* produitTempo = NULL;
+		for (int i = 0; i < inCommande->getQuantiteActuel(); i++)
+		{
+			produitTempo = inCommande->getProduitLigneCommande(i);
+			grandTotalCommande += produitTempo->getPrix() * inCommande->getQuantiteLigneCommande(i);
+			cout << produitTempo->getCode()
+				<< "\n" << produitTempo->getNom()
+				<< "\n" << inCommande->getQuantiteLigneCommande(i) << " au prix de " << produitTempo->getPrix()<<"$ chacun " << "pour un total de : " << produitTempo->getPrix() * inCommande->getQuantiteLigneCommande(i)<<"$"
+				<< "\n\n";
+		}
+		cout << "Total de : " << grandTotalCommande << "$\n\n";
+	}
 }
 
 void TraiterLesCommandes()
 {
+	int cpt = gestionCommande.
+	string reponse = "";
+	while(reponse=="o")
+
+
+		AfficherUneCommande()
 
 }
 

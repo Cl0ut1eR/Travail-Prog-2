@@ -18,8 +18,9 @@ Commande::Commande(const Commande& inCommande)
 	{
 		TabLignesCommandes[i] = inCommande.TabLignesCommandes[i];
 	}
-
+	QuantiteProduitsActuel = inCommande.getQuantiteActuel();
 	NomClient = inCommande.getName();
+	CommandeFini = inCommande.getCommandeFini();
 }
 
 void Commande::SetNom(string inNom)
@@ -80,9 +81,8 @@ void Commande::AjouterLigneDeCommande(Produit* inProduit, int inQuantitée)
 {
 	if (QuantiteProduitsActuel < QuantiteeProduitsMax)
 	{
-		QuantiteProduitsActuel++;
 		TabLignesCommandes[QuantiteProduitsActuel].setProduit(inProduit);
 		TabLignesCommandes[QuantiteProduitsActuel].setQuantite(inQuantitée);
-
+		QuantiteProduitsActuel++;
 	}
 }
