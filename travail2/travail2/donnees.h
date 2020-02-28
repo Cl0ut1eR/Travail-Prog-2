@@ -15,7 +15,7 @@ public:
 	Donnees();
 	Produit produitsAVendre[maxProduitsAVendre];
 
-	bool VerifierNoProduit(string inNoProduit) const;
+	bool VerifierCodeProduit(string inNoProduit) const;
 	Produit* getProduitByCode(string CodeProduit) ;
 
 	int getMaxProduitsAVendre() const;

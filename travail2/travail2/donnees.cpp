@@ -5,7 +5,7 @@ Donnees::Donnees()
 	AjouterLesProduitsAVendre();
 }
 
-bool Donnees::VerifierNoProduit(string inNoProduit) const
+bool Donnees::VerifierCodeProduit(string inCodeProduit) const
 {
 	
 	
@@ -13,7 +13,7 @@ bool Donnees::VerifierNoProduit(string inNoProduit) const
 
 		for (int i = 0; i < getMaxProduitsAVendre(); i++)
 		{
-			if (produitsAVendre[i].getCode() == inNoProduit)
+			if (produitsAVendre[i].getCode() == inCodeProduit)
 			{
 				exist = true;
 				i = getMaxProduitsAVendre() + 1;
