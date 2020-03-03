@@ -86,3 +86,25 @@ void Commande::AjouterLigneDeCommande(Produit* inProduit, int inQuantitée)
 		QuantiteProduitsActuel++;
 	}
 }
+
+int Commande::VerifCode(string inCode)
+{
+	int pos = -1;
+	for (int i = 0; i < QuantiteProduitsActuel; i++)
+	{
+		if (TabLignesCommandes[i].getProduit()->getCode() == inCode)
+		{
+			pos = i;
+			i = QuantiteProduitsActuel + 1;
+		}
+	}
+	return pos;
+}
+
+void Commande::ModifierQtyProduit(int inPos, int inQty)
+{
+	if (inPos <= QuantiteProduitsActuel && inQty > 0)
+	{
+		TabLignesCommandes[inPos].setQuantite(inQty);
+	}
+}

@@ -104,12 +104,58 @@ void main()
 		
 		if (inCommande->getQuantiteActuel() < QuantiteeProduitsMax)
 		{
-			string Code = DemanderCodeProduit();
+			string Code = "";
+			do{
+				ClrScr();
+				AfficherProduitsDisponible();
+				if (Code == "-1")
+				{
+					cout << "\n---Code invalide---\n";
+				}
+				Code = DemanderCodeProduit();
+			} while (Code=="-1");
+			ClrScr();
+			int Qty = 0;
+			if (-1 == inCommande->VerifCode(Code))
+			{
+				Qty = DemanderQtyProduit(gestionCommande.getProduitByCode(Code)->getNom());
+				inCommande->AjouterLigneDeCommande(gestionCommande.getProduitByCode(Code), Qty);
+				ClrScr();
+				cout << Qty << " " << gestionCommande.getProduitByCode(Code)->getNom() << "à ajouter avec succès.\n\n";
+			}
+			else
+			{
+				char Ajout = '%';
+				do 
+				{
+					ClrScr();
+					if (Ajout !='%'&&Ajout!='O'&&Ajout!='N' )
+					{
+						cout << "une erreur est survenue\n";
+					}
+					cout <<inCommande->getQuantiteLigneCommande( inCommande->VerifCode(Code)) << " " << gestionCommande.getProduitByCode(Code)->getNom() << " existe déjà dans votre commande, voulez vous modifier la quantité ? o-n\n";
 
-			int quantite = DemanderQtyProduit(gestionCommande.getProduitByCode(Code)->getNom());
+					cin >> Ajout;
+					cin.clear();
+					cin.ignore(2000, '\n');
+					Ajout = toupper(Ajout);
+				} while (Ajout!='O'&&Ajout!='N');
+				if (Ajout == 'O')
+				{
+					Qty = DemanderQtyProduit(gestionCommande.getProduitByCode(Code)->getNom());
+					inCommande->ModifierQtyProduit(inCommande->VerifCode(Code), Qty);
+					ClrScr();
+					cout << Qty << " " << gestionCommande.getProduitByCode(Code)->getNom() << " a été modifier avec succès.\n\n";
+				}
+				else
+				{
+					cout << "Aucune modification éffectuée\n";
+					system("pause");
+					ClrScr();
+				}
+			}
 
-			inCommande->AjouterLigneDeCommande(gestionCommande.getProduitByCode(Code), quantite);
-			cout << quantite<<" "<<gestionCommande.getProduitByCode(Code)->getNom()<<"à ajouter avec succès.\n\n";
+
 		}
 
 	}
@@ -122,19 +168,13 @@ void main()
 	string DemanderCodeProduit()
 	{
 		string codeProduit="";
-		AfficherProduitsDisponible();
-		while (codeProduit == "" || !gestionCommande.VerifierCodeProduit(codeProduit))
-		{
 			cout << "\nEntrer le code du produit souhaiter: \n";
 			cin>>codeProduit;
 			std::cin.clear();
 			if (codeProduit == "" || !gestionCommande.VerifierCodeProduit(codeProduit))
 			{
-				ClrScr();
-				AfficherProduitsDisponible();
-				cout << "\nUne erreure est survenue,\n";
+				codeProduit = "-1";
 			}
-		}
 		return codeProduit;
 	}
 
@@ -273,36 +313,102 @@ void TraiterLesCommandes()
 {
 	vector<int> tabCommandesNonFini = gestionCommande.getTabCommandeNonFinal();
 	int index = 0;
-	string Continuer = "o";
-	while (index < tabCommandesNonFini.size()&&(Continuer=="o" || Continuer=="n"))
+	char Continuer = 'O';
+#pragma region affiche chaque commandes non fini
+	while (index < tabCommandesNonFini.size()&&(Continuer=='O'))
 	{
-		if (Continuer == "o")
-		{
-			string Action = "";
+
+
+		#pragma region Action pour cette commande
+			char Action = ' ';
 			ClrScr();
-			while (Action != "F" && Action != "f" && Action != "m" && Action != "M")
+			while (Action != 'F' && Action != 'M' && Action != 'Q' && Action != 'P')
 			{
-				AfficherUneCommande(gestionCommande.getUneCommande(index));
-				cout << "\n\tfinaliser  --- f-F\n\tModifier les quantitées  --- m-M\n";
+				AfficherUneCommande(gestionCommande.getUneCommande(tabCommandesNonFini[index]));
+				cout << "-------------------\n";
+				if (Action != 'F' && Action != 'M'&& Action != ' ')
+				{
+					cout << "\tUne erreur est survenue.\n";
+				}
+				cout << "\n\tfinaliser  --- f-F\n"
+					<<"\tModifier les quantitées  --- m-M\n"
+					<<"\tProchainne commande --- p-P\n"
+					<<"\tQuiter --- q-Q\n";
 				cin >> Action;
 				cin.clear();
+				cin.ignore(2000, '\n');
 				ClrScr();
-				if (Action != "F" && Action != "f" && Action != "m" && Action != "M")
-				{
-					cout << "Une erreur est survenue.\n";
-				}
+				Action = toupper(Action);
 			}
-			if (Action == "F" || Action == "f")
+			string Code = "";
+			int Pos = 0;
+			
+			switch (Action)
 			{
-				FinaliserCommande(gestionCommande.getUneCommande(index));
+			case 'F'://------------F------------------
+
+				FinaliserCommande(gestionCommande.getUneCommande(tabCommandesNonFini[index]));
 				ClrScr();
 				cout << "La commande à été finalisée\n";
 				system("pause");
+				break;
+
+			case'M'://-------------M-----------------
+				do {
+					ClrScr();
+					AfficherUneCommande(gestionCommande.getUneCommande(tabCommandesNonFini[index]));
+					cout << "-------------------\n";
+						
+					if (Pos == -1)
+					{
+						cout << "Le code n'existe pas\n";
+					}
+						cout<< "Modification de quantitées\n"
+						<< "Entrez le numero du produit que vous voulez modifier\n";
+
+					Code = DemanderCodeProduit();
+
+					if (Code != "-1")
+					{
+						Pos = gestionCommande.getUneCommande(tabCommandesNonFini[index])->VerifCode(Code);
+						if (Pos != -1)
+						{
+							/*code pour modification*/
+							gestionCommande.getUneCommande(tabCommandesNonFini[index])->ModifierQtyProduit(Pos, DemanderQtyProduit(gestionCommande.getProduitByCode(Code)->getNom()));
+							cout << "Modification éffectuée avec succès\n";
+							system("pause");
+						}
+					}
+					else
+					{
+						Pos = -1;
+					}
+
+				} while (Pos==-1);
+				index--;
+				break;
+
+			case 'Q':
+				Continuer = 'N';
+				break;
+			case 'P':
+				break;
+			default:
+				index--;
+				break;
 			}
-		}
+#pragma endregion
+
+		
 		index++;
 	}
+#pragma endregion
+
 }
+
+
+
+
 
 void FinaliserCommande(Commande* inCommande)
 {

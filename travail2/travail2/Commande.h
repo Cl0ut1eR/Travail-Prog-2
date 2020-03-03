@@ -31,8 +31,6 @@ public:
 		//récupère un produit dans la commandes.
 		Produit* getProduitLigneCommande(int noCommande) const;
 		
-		
-
 		//récupère la quantité d'un produit dans la commande.
 		int getQuantiteLigneCommande(int inNoCommande) const;
 		int getMaxProduitCommande() const;
@@ -45,6 +43,10 @@ public:
 	#pragma region Functions
 
 		void AjouterLigneDeCommande(Produit* produit, int Quantitée);
+
+		int VerifCode(string Code);
+
+		void ModifierQtyProduit(int Pos, int Qty);
 
 	#pragma endregion
 
